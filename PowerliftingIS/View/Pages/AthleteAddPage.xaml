@@ -1,0 +1,124 @@
+﻿<Page x:Class="PowerliftingIS.View.Pages.AthleteAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PowerliftingIS.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+       Background="{StaticResource BgDeep}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0"
+                   Style="{StaticResource PageTitle}"
+                   Text="Добавить спортсмена"/>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource TitleAccentBar}"/>
+
+        <!-- Карточка формы -->
+        <Border Grid.Row="2"
+                Style="{StaticResource Card}"
+                VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ФИО -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ФИО СПОРТСМЕНА"/>
+                <TextBox Grid.Row="2" Grid.Column="0"
+                         x:Name="FullNameTb"
+                         Style="{StaticResource InputTextBox}"/>
+
+                <!-- Дата рождения -->
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ДАТА РОЖДЕНИЯ"/>
+                <DatePicker Grid.Row="2" Grid.Column="2"
+                            x:Name="BirthDateDp"
+                            Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                <!-- Разряд -->
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           Style="{StaticResource FieldLabel}"
+                           Text="РАЗРЯД"/>
+                <ComboBox Grid.Row="6" Grid.Column="0"
+                          x:Name="RankCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                <!-- Весовая категория -->
+                <TextBlock Grid.Row="4" Grid.Column="2"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ВЕСОВАЯ КАТЕГОРИЯ"/>
+                <ComboBox Grid.Row="6" Grid.Column="2"
+                          x:Name="WeightCategoryCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                <!-- Тренер -->
+                <TextBlock Grid.Row="8" Grid.Column="0"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ТРЕНЕР"/>
+                <ComboBox Grid.Row="10" Grid.Column="0"
+                          x:Name="CoachCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                <!-- Разделитель -->
+                <Border Grid.Row="12" Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Height="1"
+                        Background="{StaticResource BorderSubtle}"/>
+
+                <!-- Кнопки -->
+                <StackPanel Grid.Row="16" Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Style="{StaticResource SecondaryButton}"
+                            Content="Назад"
+                            Width="110"
+                            Margin="0 0 10 0"
+                            Click="BackBtn_Click"/>
+                    <Button Style="{StaticResource PrimaryButton}"
+                            Content="Сохранить"
+                            Width="130"
+                            Click="SaveBtn_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>
+

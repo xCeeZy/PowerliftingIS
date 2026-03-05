@@ -1,0 +1,167 @@
+﻿<Page x:Class="PowerliftingIS.View.Pages.ResultAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PowerliftingIS.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="{StaticResource BgDeep}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Style="{StaticResource PageTitle}"
+                   Text="Добавить результат"/>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource TitleAccentBar}"/>
+
+        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <Border Style="{StaticResource Card}"
+                Margin="0 0 6 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Спортсмен -->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource FieldLabel}"
+                           Text="СПОРТСМЕН"/>
+                    <ComboBox Grid.Row="2" Grid.Column="0"
+                          x:Name="AthleteCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                    <!-- Упражнение -->
+                    <TextBlock Grid.Row="0" Grid.Column="2"
+                           Style="{StaticResource FieldLabel}"
+                           Text="УПРАЖНЕНИЕ"/>
+                    <ComboBox Grid.Row="2" Grid.Column="2"
+                          x:Name="ExerciseCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                    <!-- Вес -->
+                    <TextBlock Grid.Row="4" Grid.Column="0"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ПОДНЯТЫЙ ВЕС (КГ)"/>
+                    <TextBox Grid.Row="6" Grid.Column="0"
+                         x:Name="WeightTb"
+                         Style="{StaticResource InputTextBox}"/>
+
+                    <!-- Дата -->
+                    <TextBlock Grid.Row="4" Grid.Column="2"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ДАТА"/>
+                    <DatePicker Grid.Row="6" Grid.Column="2"
+                            x:Name="ResultDateDp"
+                            Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                    <!-- Соревнование -->
+                    <TextBlock Grid.Row="8" Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Style="{StaticResource FieldLabel}"
+                           Text="СОРЕВНОВАНИЕ (необязательно)"/>
+                    <ComboBox Grid.Row="10" Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          x:Name="CompetitionCb"
+                          Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"/>
+
+                    <!-- Личный рекорд -->
+                    <TextBlock Grid.Row="12" Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ЛИЧНЫЙ РЕКОРД"/>
+                    <StackPanel Grid.Row="14" Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Orientation="Horizontal">
+                        <RadioButton x:Name="RecordYesRb"
+                                 Content="Да"
+                                 Foreground="{StaticResource TextPrimary}"
+                                 FontSize="13"
+                                 Margin="0 0 24 0"/>
+                        <RadioButton x:Name="RecordNoRb"
+                                 Content="Нет"
+                                 Foreground="{StaticResource TextPrimary}"
+                                 FontSize="13"
+                                 IsChecked="True"/>
+                    </StackPanel>
+
+                    <!-- Примечание -->
+                    <TextBlock Grid.Row="16" Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Style="{StaticResource FieldLabel}"
+                           Text="ПРИМЕЧАНИЕ"/>
+                    <TextBox Grid.Row="18" Grid.Column="0"
+                         Grid.ColumnSpan="3"
+                         x:Name="NoteTb"
+                         Style="{StaticResource InputTextBox}"
+                         Height="Auto"
+                         MinHeight="36"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalContentAlignment="Top"/>
+
+                    <!-- Разделитель -->
+                    <Border Grid.Row="20" Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Height="1"
+                        Background="{StaticResource BorderSubtle}"/>
+
+                    <!-- Кнопки -->
+                    <StackPanel Grid.Row="22" Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                        <Button Style="{StaticResource SecondaryButton}"
+                            Content="Назад"
+                            Width="110"
+                            Margin="0 0 10 0"
+                            Click="BackBtn_Click"/>
+                        <Button Style="{StaticResource PrimaryButton}"
+                            Content="Сохранить"
+                            Width="130"
+                            Click="SaveBtn_Click"/>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

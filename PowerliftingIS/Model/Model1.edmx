@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище PowerliftingDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Athletes">
+          <Key>
+            <PropertyRef Name="AthleteId" />
+          </Key>
+          <Property Name="AthleteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="RankId" Type="int" Nullable="false" />
+          <Property Name="WeightCategoryId" Type="int" Nullable="false" />
+          <Property Name="CoachId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Coaches">
+          <Key>
+            <PropertyRef Name="CoachId" />
+          </Key>
+          <Property Name="CoachId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Experience" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competitions">
+          <Key>
+            <PropertyRef Name="CompetitionId" />
+          </Key>
+          <Property Name="CompetitionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompetitionName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CompetitionDate" Type="date" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Exercises">
+          <Key>
+            <PropertyRef Name="ExerciseId" />
+          </Key>
+          <Property Name="ExerciseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExerciseName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ranks">
+          <Key>
+            <PropertyRef Name="RankId" />
+          </Key>
+          <Property Name="RankId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Results">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AthleteId" Type="int" Nullable="false" />
+          <Property Name="ExerciseId" Type="int" Nullable="false" />
+          <Property Name="CompetitionId" Type="int" />
+          <Property Name="ResultWeight" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="ResultDate" Type="date" Nullable="false" />
+          <Property Name="IsPersonalRecord" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TrainingAthletes">
+          <Key>
+            <PropertyRef Name="TrainingAthleteId" />
+          </Key>
+          <Property Name="TrainingAthleteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingId" Type="int" Nullable="false" />
+          <Property Name="AthleteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainings">
+          <Key>
+            <PropertyRef Name="TrainingId" />
+          </Key>
+          <Property Name="TrainingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingDate" Type="date" Nullable="false" />
+          <Property Name="CoachId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="WeightCategories">
+          <Key>
+            <PropertyRef Name="WeightCategoryId" />
+          </Key>
+          <Property Name="WeightCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaxWeight" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Athletes__CoachI__403A8C7D">
+          <End Role="Coaches" Type="Self.Coaches" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coaches">
+              <PropertyRef Name="CoachId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="CoachId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Athletes__RankId__3E52440B">
+          <End Role="Ranks" Type="Self.Ranks" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ranks">
+              <PropertyRef Name="RankId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Athletes__Weight__3F466844">
+          <End Role="WeightCategories" Type="Self.WeightCategories" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeightCategories">
+              <PropertyRef Name="WeightCategoryId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="WeightCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Athlete__4D94879B">
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Athletes">
+              <PropertyRef Name="AthleteId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="AthleteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Competi__4F7CD00D">
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="0..1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitions">
+              <PropertyRef Name="CompetitionId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Exercis__4E88ABD4">
+          <End Role="Exercises" Type="Self.Exercises" Multiplicity="1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercises">
+              <PropertyRef Name="ExerciseId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="ExerciseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TrainingA__Athle__4AB81AF0">
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="1" />
+          <End Role="TrainingAthletes" Type="Self.TrainingAthletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Athletes">
+              <PropertyRef Name="AthleteId" />
+            </Principal>
+            <Dependent Role="TrainingAthletes">
+              <PropertyRef Name="AthleteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TrainingA__Train__49C3F6B7">
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="1" />
+          <End Role="TrainingAthletes" Type="Self.TrainingAthletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainings">
+              <PropertyRef Name="TrainingId" />
+            </Principal>
+            <Dependent Role="TrainingAthletes">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trainings__Coach__46E78A0C">
+          <End Role="Coaches" Type="Self.Coaches" Multiplicity="1" />
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coaches">
+              <PropertyRef Name="CoachId" />
+            </Principal>
+            <Dependent Role="Trainings">
+              <PropertyRef Name="CoachId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PowerliftingDBModelContainer">
+          <EntitySet Name="Athletes" EntityType="Self.Athletes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coaches" EntityType="Self.Coaches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Competitions" EntityType="Self.Competitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exercises" EntityType="Self.Exercises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ranks" EntityType="Self.Ranks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Results" EntityType="Self.Results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrainingAthletes" EntityType="Self.TrainingAthletes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainings" EntityType="Self.Trainings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeightCategories" EntityType="Self.WeightCategories" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Athletes__CoachI__403A8C7D" Association="Self.FK__Athletes__CoachI__403A8C7D">
+            <End Role="Coaches" EntitySet="Coaches" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Athletes__RankId__3E52440B" Association="Self.FK__Athletes__RankId__3E52440B">
+            <End Role="Ranks" EntitySet="Ranks" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Athletes__Weight__3F466844" Association="Self.FK__Athletes__Weight__3F466844">
+            <End Role="WeightCategories" EntitySet="WeightCategories" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Athlete__4D94879B" Association="Self.FK__Results__Athlete__4D94879B">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Competi__4F7CD00D" Association="Self.FK__Results__Competi__4F7CD00D">
+            <End Role="Competitions" EntitySet="Competitions" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Exercis__4E88ABD4" Association="Self.FK__Results__Exercis__4E88ABD4">
+            <End Role="Exercises" EntitySet="Exercises" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TrainingA__Athle__4AB81AF0" Association="Self.FK__TrainingA__Athle__4AB81AF0">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="TrainingAthletes" EntitySet="TrainingAthletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TrainingA__Train__49C3F6B7" Association="Self.FK__TrainingA__Train__49C3F6B7">
+            <End Role="Trainings" EntitySet="Trainings" />
+            <End Role="TrainingAthletes" EntitySet="TrainingAthletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trainings__Coach__46E78A0C" Association="Self.FK__Trainings__Coach__46E78A0C">
+            <End Role="Coaches" EntitySet="Coaches" />
+            <End Role="Trainings" EntitySet="Trainings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PowerliftingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Athletes">
+          <Key>
+            <PropertyRef Name="AthleteId" />
+          </Key>
+          <Property Name="AthleteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RankId" Type="Int32" Nullable="false" />
+          <Property Name="WeightCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CoachId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coaches" Relationship="Self.FK__Athletes__CoachI__403A8C7D" FromRole="Athletes" ToRole="Coaches" />
+          <NavigationProperty Name="Ranks" Relationship="Self.FK__Athletes__RankId__3E52440B" FromRole="Athletes" ToRole="Ranks" />
+          <NavigationProperty Name="WeightCategories" Relationship="Self.FK__Athletes__Weight__3F466844" FromRole="Athletes" ToRole="WeightCategories" />
+          <NavigationProperty Name="Results" Relationship="Self.FK__Results__Athlete__4D94879B" FromRole="Athletes" ToRole="Results" />
+          <NavigationProperty Name="TrainingAthletes" Relationship="Self.FK__TrainingA__Athle__4AB81AF0" FromRole="Athletes" ToRole="TrainingAthletes" />
+        </EntityType>
+        <EntityType Name="Coaches">
+          <Key>
+            <PropertyRef Name="CoachId" />
+          </Key>
+          <Property Name="CoachId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Experience" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Athletes" Relationship="Self.FK__Athletes__CoachI__403A8C7D" FromRole="Coaches" ToRole="Athletes" />
+          <NavigationProperty Name="Trainings" Relationship="Self.FK__Trainings__Coach__46E78A0C" FromRole="Coaches" ToRole="Trainings" />
+        </EntityType>
+        <EntityType Name="Competitions">
+          <Key>
+            <PropertyRef Name="CompetitionId" />
+          </Key>
+          <Property Name="CompetitionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompetitionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompetitionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Results" Relationship="Self.FK__Results__Competi__4F7CD00D" FromRole="Competitions" ToRole="Results" />
+        </EntityType>
+        <EntityType Name="Exercises">
+          <Key>
+            <PropertyRef Name="ExerciseId" />
+          </Key>
+          <Property Name="ExerciseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExerciseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Results" Relationship="Self.FK__Results__Exercis__4E88ABD4" FromRole="Exercises" ToRole="Results" />
+        </EntityType>
+        <EntityType Name="Ranks">
+          <Key>
+            <PropertyRef Name="RankId" />
+          </Key>
+          <Property Name="RankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Athletes" Relationship="Self.FK__Athletes__RankId__3E52440B" FromRole="Ranks" ToRole="Athletes" />
+        </EntityType>
+        <EntityType Name="Results">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AthleteId" Type="Int32" Nullable="false" />
+          <Property Name="ExerciseId" Type="Int32" Nullable="false" />
+          <Property Name="CompetitionId" Type="Int32" />
+          <Property Name="ResultWeight" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsPersonalRecord" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Athletes" Relationship="Self.FK__Results__Athlete__4D94879B" FromRole="Results" ToRole="Athletes" />
+          <NavigationProperty Name="Competitions" Relationship="Self.FK__Results__Competi__4F7CD00D" FromRole="Results" ToRole="Competitions" />
+          <NavigationProperty Name="Exercises" Relationship="Self.FK__Results__Exercis__4E88ABD4" FromRole="Results" ToRole="Exercises" />
+        </EntityType>
+        <EntityType Name="TrainingAthletes">
+          <Key>
+            <PropertyRef Name="TrainingAthleteId" />
+          </Key>
+          <Property Name="TrainingAthleteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingId" Type="Int32" Nullable="false" />
+          <Property Name="AthleteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Athletes" Relationship="Self.FK__TrainingA__Athle__4AB81AF0" FromRole="TrainingAthletes" ToRole="Athletes" />
+          <NavigationProperty Name="Trainings" Relationship="Self.FK__TrainingA__Train__49C3F6B7" FromRole="TrainingAthletes" ToRole="Trainings" />
+        </EntityType>
+        <EntityType Name="Trainings">
+          <Key>
+            <PropertyRef Name="TrainingId" />
+          </Key>
+          <Property Name="TrainingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CoachId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Coaches" Relationship="Self.FK__Trainings__Coach__46E78A0C" FromRole="Trainings" ToRole="Coaches" />
+          <NavigationProperty Name="TrainingAthletes" Relationship="Self.FK__TrainingA__Train__49C3F6B7" FromRole="Trainings" ToRole="TrainingAthletes" />
+        </EntityType>
+        <EntityType Name="WeightCategories">
+          <Key>
+            <PropertyRef Name="WeightCategoryId" />
+          </Key>
+          <Property Name="WeightCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxWeight" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Athletes" Relationship="Self.FK__Athletes__Weight__3F466844" FromRole="WeightCategories" ToRole="Athletes" />
+        </EntityType>
+        <Association Name="FK__Athletes__CoachI__403A8C7D">
+          <End Role="Coaches" Type="Self.Coaches" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coaches">
+              <PropertyRef Name="CoachId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="CoachId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Athletes__RankId__3E52440B">
+          <End Role="Ranks" Type="Self.Ranks" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ranks">
+              <PropertyRef Name="RankId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Athletes__Weight__3F466844">
+          <End Role="WeightCategories" Type="Self.WeightCategories" Multiplicity="1" />
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeightCategories">
+              <PropertyRef Name="WeightCategoryId" />
+            </Principal>
+            <Dependent Role="Athletes">
+              <PropertyRef Name="WeightCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Athlete__4D94879B">
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Athletes">
+              <PropertyRef Name="AthleteId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="AthleteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TrainingA__Athle__4AB81AF0">
+          <End Role="Athletes" Type="Self.Athletes" Multiplicity="1" />
+          <End Role="TrainingAthletes" Type="Self.TrainingAthletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Athletes">
+              <PropertyRef Name="AthleteId" />
+            </Principal>
+            <Dependent Role="TrainingAthletes">
+              <PropertyRef Name="AthleteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trainings__Coach__46E78A0C">
+          <End Role="Coaches" Type="Self.Coaches" Multiplicity="1" />
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coaches">
+              <PropertyRef Name="CoachId" />
+            </Principal>
+            <Dependent Role="Trainings">
+              <PropertyRef Name="CoachId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Competi__4F7CD00D">
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="0..1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitions">
+              <PropertyRef Name="CompetitionId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Results__Exercis__4E88ABD4">
+          <End Role="Exercises" Type="Self.Exercises" Multiplicity="1" />
+          <End Role="Results" Type="Self.Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercises">
+              <PropertyRef Name="ExerciseId" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="ExerciseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TrainingA__Train__49C3F6B7">
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="1" />
+          <End Role="TrainingAthletes" Type="Self.TrainingAthletes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainings">
+              <PropertyRef Name="TrainingId" />
+            </Principal>
+            <Dependent Role="TrainingAthletes">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PowerliftingDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Athletes" EntityType="Self.Athletes" />
+          <EntitySet Name="Coaches" EntityType="Self.Coaches" />
+          <EntitySet Name="Competitions" EntityType="Self.Competitions" />
+          <EntitySet Name="Exercises" EntityType="Self.Exercises" />
+          <EntitySet Name="Ranks" EntityType="Self.Ranks" />
+          <EntitySet Name="Results" EntityType="Self.Results" />
+          <EntitySet Name="TrainingAthletes" EntityType="Self.TrainingAthletes" />
+          <EntitySet Name="Trainings" EntityType="Self.Trainings" />
+          <EntitySet Name="WeightCategories" EntityType="Self.WeightCategories" />
+          <AssociationSet Name="FK__Athletes__CoachI__403A8C7D" Association="Self.FK__Athletes__CoachI__403A8C7D">
+            <End Role="Coaches" EntitySet="Coaches" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Athletes__RankId__3E52440B" Association="Self.FK__Athletes__RankId__3E52440B">
+            <End Role="Ranks" EntitySet="Ranks" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Athletes__Weight__3F466844" Association="Self.FK__Athletes__Weight__3F466844">
+            <End Role="WeightCategories" EntitySet="WeightCategories" />
+            <End Role="Athletes" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Athlete__4D94879B" Association="Self.FK__Results__Athlete__4D94879B">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TrainingA__Athle__4AB81AF0" Association="Self.FK__TrainingA__Athle__4AB81AF0">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="TrainingAthletes" EntitySet="TrainingAthletes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trainings__Coach__46E78A0C" Association="Self.FK__Trainings__Coach__46E78A0C">
+            <End Role="Coaches" EntitySet="Coaches" />
+            <End Role="Trainings" EntitySet="Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Competi__4F7CD00D" Association="Self.FK__Results__Competi__4F7CD00D">
+            <End Role="Competitions" EntitySet="Competitions" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Results__Exercis__4E88ABD4" Association="Self.FK__Results__Exercis__4E88ABD4">
+            <End Role="Exercises" EntitySet="Exercises" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TrainingA__Train__49C3F6B7" Association="Self.FK__TrainingA__Train__49C3F6B7">
+            <End Role="Trainings" EntitySet="Trainings" />
+            <End Role="TrainingAthletes" EntitySet="TrainingAthletes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PowerliftingDBModelContainer" CdmEntityContainer="PowerliftingDBEntities">
+          <EntitySetMapping Name="Athletes">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Athletes">
+              <MappingFragment StoreEntitySet="Athletes">
+                <ScalarProperty Name="AthleteId" ColumnName="AthleteId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="WeightCategoryId" ColumnName="WeightCategoryId" />
+                <ScalarProperty Name="CoachId" ColumnName="CoachId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coaches">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Coaches">
+              <MappingFragment StoreEntitySet="Coaches">
+                <ScalarProperty Name="CoachId" ColumnName="CoachId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Competitions">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Competitions">
+              <MappingFragment StoreEntitySet="Competitions">
+                <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
+                <ScalarProperty Name="CompetitionName" ColumnName="CompetitionName" />
+                <ScalarProperty Name="CompetitionDate" ColumnName="CompetitionDate" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exercises">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Exercises">
+              <MappingFragment StoreEntitySet="Exercises">
+                <ScalarProperty Name="ExerciseId" ColumnName="ExerciseId" />
+                <ScalarProperty Name="ExerciseName" ColumnName="ExerciseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranks">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Ranks">
+              <MappingFragment StoreEntitySet="Ranks">
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Results">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Results">
+              <MappingFragment StoreEntitySet="Results">
+                <ScalarProperty Name="ResultId" ColumnName="ResultId" />
+                <ScalarProperty Name="AthleteId" ColumnName="AthleteId" />
+                <ScalarProperty Name="ExerciseId" ColumnName="ExerciseId" />
+                <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
+                <ScalarProperty Name="ResultWeight" ColumnName="ResultWeight" />
+                <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
+                <ScalarProperty Name="IsPersonalRecord" ColumnName="IsPersonalRecord" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingAthletes">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.TrainingAthletes">
+              <MappingFragment StoreEntitySet="TrainingAthletes">
+                <ScalarProperty Name="TrainingAthleteId" ColumnName="TrainingAthleteId" />
+                <ScalarProperty Name="TrainingId" ColumnName="TrainingId" />
+                <ScalarProperty Name="AthleteId" ColumnName="AthleteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainings">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.Trainings">
+              <MappingFragment StoreEntitySet="Trainings">
+                <ScalarProperty Name="TrainingId" ColumnName="TrainingId" />
+                <ScalarProperty Name="TrainingDate" ColumnName="TrainingDate" />
+                <ScalarProperty Name="CoachId" ColumnName="CoachId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeightCategories">
+            <EntityTypeMapping TypeName="PowerliftingDBModel.WeightCategories">
+              <MappingFragment StoreEntitySet="WeightCategories">
+                <ScalarProperty Name="WeightCategoryId" ColumnName="WeightCategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="MaxWeight" ColumnName="MaxWeight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

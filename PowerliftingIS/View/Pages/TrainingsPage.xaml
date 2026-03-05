@@ -1,0 +1,115 @@
+﻿<Page x:Class="PowerliftingIS.View.Pages.TrainingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PowerliftingIS.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="{StaticResource BgDeep}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="12"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0"
+                   Style="{StaticResource PageTitle}"
+                   Text="Тренировки"/>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource TitleAccentBar}"/>
+
+        <!-- Панель управления -->
+        <Grid Grid.Row="2"
+              Margin="0 0 0 14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="14"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     x:Name="SearchTb"
+                     Style="{StaticResource SearchTextBox}"
+                     Width="180"
+                     TextChanged="SearchTb_TextChanged"/>
+
+            <ComboBox Grid.Column="2"
+                      x:Name="CoachFilterCb"
+                      Background="#1E2A4A" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" Height="36" FontSize="13"
+                      Width="180"
+                      SelectionChanged="CoachFilterCb_SelectionChanged"/>
+
+            <Button Grid.Column="4"
+                    Style="{StaticResource PrimaryButton}"
+                    Content="+ Добавить"
+                    Width="120"
+                    Click="AddBtn_Click"/>
+
+            <Button Grid.Column="6"
+                    Style="{StaticResource DangerButton}"
+                    Content="Удалить"
+                    Width="100"
+                    Click="DeleteBtn_Click"/>
+        </Grid>
+
+        <!-- Список тренировок -->
+        <DataGrid Grid.Row="3"
+                  x:Name="TrainingsDg"
+                  Style="{StaticResource MainDataGrid}"
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                  SelectionChanged="TrainingsDg_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата"
+                                    Binding="{Binding TrainingDate, StringFormat='dd.MM.yyyy'}"
+                                    Width="100"/>
+                <DataGridTextColumn Header="Тренер"
+                                    Binding="{Binding Coaches.FullName}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Описание"
+                                    Binding="{Binding Description}"
+                                    Width="3*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Заголовок нижней секции -->
+        <TextBlock Grid.Row="5"
+                   Text="ПРИСУТСТВОВАЛИ НА ТРЕНИРОВКЕ"
+                   FontSize="11"
+                   FontWeight="Bold"
+                   Foreground="{StaticResource TextMuted}"
+                   Margin="0 0 0 8"/>
+
+        <!-- Список присутствовавших -->
+        <DataGrid Grid.Row="6"
+                  x:Name="AttendanceDg"
+                  Style="{StaticResource MainDataGrid}"
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО спортсмена"
+                                    Binding="{Binding Athletes.FullName}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Разряд"
+                                    Binding="{Binding Athletes.Ranks.RankName}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Весовая категория"
+                                    Binding="{Binding Athletes.WeightCategories.CategoryName}"
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Page>
+
