@@ -1,4 +1,5 @@
-﻿using PowerliftingIS.Model;
+﻿using PowerliftingIS.AppData;
+using PowerliftingIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +25,46 @@ namespace PowerliftingIS.View.Pages
 
             CoachCb.SelectedValuePath = "CoachId";
             CoachCb.DisplayMemberPath = "FullName";
-            CoachCb.ItemsSource = App.context.Coaches.ToList();
+
+            if (SessionManager.IsAdmin)
+            {
+                CoachCb.ItemsSource = App.context.Coaches.ToList();
+                CoachCb.IsEnabled = true;
+            }
+            else
+            {
+                CoachCb.ItemsSource = new List<Coaches> { SessionManager.CurrentCoach };
+                CoachCb.SelectedIndex = 0;
+                CoachCb.IsEnabled = false;
+            }
 
             AthletesLb.DisplayMemberPath = "FullName";
             AllAthletesLb.DisplayMemberPath = "FullName";
-            AllAthletesLb.ItemsSource = App.context.Athletes.ToList();
+
+            if (SessionManager.IsAdmin)
+            {
+                AllAthletesLb.ItemsSource = App.context.Athletes.ToList();
+                AllAthletesLb.IsEnabled = true;
+            }
+            else
+            {
+                AllAthletesLb.IsEnabled = false;
+
+                List<Athletes> CoachAthletes = new List<Athletes>();
+                foreach (Athletes AthleteItem in App.context.Athletes.ToList())
+                {
+                    if (AthleteItem.CoachId == SessionManager.CurrentCoach.CoachId)
+                    {
+                        CoachAthletes.Add(AthleteItem);
+                    }
+                }
+                AthletesLb.ItemsSource = CoachAthletes;
+            }
         }
 
         private void CoachCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CoachCb.SelectedValue != null)
+            if (CoachCb.SelectedValue != null && SessionManager.IsAdmin)
             {
                 int CoachId = (int)CoachCb.SelectedValue;
 
@@ -78,26 +109,29 @@ namespace PowerliftingIS.View.Pages
                     App.context.TrainingAthletes.Add(NewRecord);
                 }
 
-                foreach (Athletes AthleteItem in AllAthletesLb.SelectedItems)
+                if (SessionManager.IsAdmin)
                 {
-                    bool AlreadyAdded = false;
-                    foreach (Athletes SelectedItem in AthletesLb.SelectedItems)
+                    foreach (Athletes AthleteItem in AllAthletesLb.SelectedItems)
                     {
-                        if (SelectedItem.AthleteId == AthleteItem.AthleteId)
+                        bool AlreadyAdded = false;
+                        foreach (Athletes SelectedItem in AthletesLb.SelectedItems)
                         {
-                            AlreadyAdded = true;
-                            break;
+                            if (SelectedItem.AthleteId == AthleteItem.AthleteId)
+                            {
+                                AlreadyAdded = true;
+                                break;
+                            }
                         }
-                    }
 
-                    if (!AlreadyAdded)
-                    {
-                        TrainingAthletes NewRecord = new TrainingAthletes()
+                        if (!AlreadyAdded)
                         {
-                            TrainingId = NewTraining.TrainingId,
-                            AthleteId = AthleteItem.AthleteId
-                        };
-                        App.context.TrainingAthletes.Add(NewRecord);
+                            TrainingAthletes NewRecord = new TrainingAthletes()
+                            {
+                                TrainingId = NewTraining.TrainingId,
+                                AthleteId = AthleteItem.AthleteId
+                            };
+                            App.context.TrainingAthletes.Add(NewRecord);
+                        }
                     }
                 }
 

@@ -1,4 +1,5 @@
-﻿using PowerliftingIS.Model;
+﻿using PowerliftingIS.AppData;
+using PowerliftingIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,18 @@ namespace PowerliftingIS.View.Pages
 
             AthleteCb.SelectedValuePath = "AthleteId";
             AthleteCb.DisplayMemberPath = "FullName";
-            AthleteCb.ItemsSource = App.context.Athletes.ToList();
+
+            List<Athletes> AthletesList = new List<Athletes>();
+            foreach (Athletes AthleteItem in App.context.Athletes.ToList())
+            {
+                bool MatchesRole = SessionManager.IsAdmin ||
+                                   AthleteItem.CoachId == SessionManager.CurrentCoach.CoachId;
+                if (MatchesRole)
+                {
+                    AthletesList.Add(AthleteItem);
+                }
+            }
+            AthleteCb.ItemsSource = AthletesList;
 
             ExerciseCb.SelectedValuePath = "ExerciseId";
             ExerciseCb.DisplayMemberPath = "ExerciseName";

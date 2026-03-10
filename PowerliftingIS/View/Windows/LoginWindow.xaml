@@ -17,245 +17,155 @@
             <ColumnDefinition Width="430"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ЛЕВАЯ ПАНЕЛЬ -->
-        <Border Grid.Column="0"
-                Background="{StaticResource BgSidebar}">
-            <Grid Margin="50 36 50 36">
+        <Border Grid.Column="0" Background="{StaticResource BgSidebar}">
+
+            <Grid Margin="50 40 50 40">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Логотип -->
-                <Image Grid.Row="0"
-                       Source="/Resources/Images/logo.png"
-                       Width="80"
-                       HorizontalAlignment="Left"
-                       Stretch="UniformToFill" Margin="-13,0,0,0">
-                    <Image.Clip>
-                        <RectangleGeometry RadiusX="20" RadiusY="20"
-                                           Rect="2,2,66,66"/>
-                    </Image.Clip>
-                </Image>
+                <StackPanel Grid.Row="0">
+                    <Image Source="/Resources/Images/logo.png"
+                           Width="64" Height="64"
+                           HorizontalAlignment="Left"
+                           Stretch="UniformToFill" 
+                           Margin="0,0,0,16">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="12" RadiusY="12" Rect="0,0,64,64"/>
+                        </Image.Clip>
+                    </Image>
 
-                <TextBlock Grid.Row="1"
-                           Style="{StaticResource LoginTitle}"
-                           Text="Добро пожаловать"/>
+                    <TextBlock Style="{StaticResource LoginTitle}" 
+                               Text="Добро пожаловать"/>
 
-                <TextBlock Grid.Row="2"
-                           Style="{StaticResource LoginSubtitle}"
-                           Text="Система управления секцией пауэрлифтинга"/>
+                    <TextBlock Style="{StaticResource LoginSubtitle}" 
+                               Text="Система управления секцией пауэрлифтинга"
+                               Margin="0 0 0 10"/>
+                </StackPanel>
 
-                <!-- Логин -->
-                <TextBlock Grid.Row="3"
-                           Style="{StaticResource LoginLabel}"
-                           Text="ЛОГИН"/>
+                <StackPanel Grid.Row="1" VerticalAlignment="Center">
 
-                <TextBox Grid.Row="4"
-                         x:Name="LoginTb"
-                         Style="{StaticResource LoginTextBox}"
-                         TextChanged="LoginTb_TextChanged"/>
+                    <TextBlock Style="{StaticResource LoginLabel}" Text="ЛОГИН"/>
+                    <TextBox x:Name="LoginTb" 
+                             Style="{StaticResource LoginTextBox}" 
+                             TextChanged="LoginTb_TextChanged"
+                             Margin="0 0 0 16"/>
 
-                <!-- Пароль + CapsLock -->
-                <Grid Grid.Row="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0"
-                               Style="{StaticResource LoginLabel}"
-                               Text="ПАРОЛЬ"/>
-
-                    <PasswordBox Grid.Row="1"
-                                 x:Name="PasswordPb"
-                                 Style="{StaticResource LoginPasswordBox}"
+                    <TextBlock Style="{StaticResource LoginLabel}" Text="ПАРОЛЬ"/>
+                    <PasswordBox x:Name="PasswordPb" 
+                                 Style="{StaticResource LoginPasswordBox}" 
                                  PasswordChanged="PasswordPb_PasswordChanged"
                                  Margin="0 0 0 6"/>
-
-                    <TextBlock Grid.Row="2"
-                               x:Name="CapsLockTb"
-                               Text="⚠  Включён CapsLock"
-                               FontSize="11"
-                               FontWeight="SemiBold"
-                               Foreground="#F0A500"
-                               Visibility="Collapsed"
+                    <TextBlock x:Name="CapsLockTb" 
+                               Text="⚠ Включён CapsLock" 
+                               FontSize="11" 
+                               FontWeight="SemiBold" 
+                               Foreground="#F0A500" 
+                               Visibility="Collapsed" 
                                Margin="0 0 0 8"/>
-                </Grid>
 
-                <!-- Капча -->
-                <Border Grid.Row="6"
-                        x:Name="CaptchaPanel"
-                        Visibility="Collapsed"
-                        Background="#0A2040"
-                        BorderBrush="#1E3060"
-                        BorderThickness="1"
-                        CornerRadius="8"
-                        Margin="0 0 0 12">
-                    <Grid Margin="14 12 14 12">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="8"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <Border x:Name="CaptchaPanel" 
+                            Visibility="Collapsed" 
+                            Background="#0A2040" 
+                            BorderBrush="#1E3060" 
+                            BorderThickness="1" 
+                            CornerRadius="8" 
+                            Margin="0 6 0 0">
+                        <Grid Margin="14 12 14 12">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="8"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="46"/>
-                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="46"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0"
-                                    Background="#0F1A30"
-                                    BorderBrush="#E94560"
-                                    BorderThickness="1"
-                                    CornerRadius="6"
-                                    Height="46">
-                                <TextBlock x:Name="CaptchaCodeTb"
-                                           FontSize="24"
-                                           FontWeight="Bold"
-                                           FontFamily="Courier New"
-                                           Foreground="#E94560"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           />
-                            </Border>
+                                <Border Grid.Column="0" Background="#0F1A30" BorderBrush="#E94560" BorderThickness="1" CornerRadius="6" Height="46">
+                                    <TextBlock x:Name="CaptchaCodeTb" FontSize="24" FontWeight="Bold" FontFamily="Courier New" Foreground="#E94560" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
 
-                            <Button Grid.Column="1"
-                                    x:Name="RefreshCaptchaBtn"
-                                    Width="40"
-                                    Height="46"
-                                    Background="#0F1A30"
-                                    BorderBrush="#1E3060"
-                                    BorderThickness="1"
-                                    Margin="6 0 0 0"
-                                    Click="RefreshCaptchaBtn_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="6">
-                                            <TextBlock Text="↻"
-                                                       FontSize="20"
-                                                       Foreground="#A8B2D8"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" x:Name="RefreshCaptchaBtn" Width="40" Height="46" Background="#0F1A30" BorderBrush="#1E3060" BorderThickness="1" Margin="6 0 0 0" Click="RefreshCaptchaBtn_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                                                <TextBlock Text="↻" FontSize="20" Foreground="#A8B2D8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#1E2A4A"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+
+                            <TextBox Grid.Row="2" x:Name="CaptchaInputTb" Height="36" FontSize="13" Background="#0F1A30" Foreground="#EAEAEA" BorderBrush="#1E3060" BorderThickness="1" CaretBrush="#EAEAEA" VerticalContentAlignment="Center">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                                            <ScrollViewer x:Name="PART_ContentHost" Margin="10 0"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#1E2A4A"/>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="#E94560"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                </TextBox.Template>
+                            </TextBox>
                         </Grid>
+                    </Border>
 
-                        <TextBox Grid.Row="2"
-                                 x:Name="CaptchaInputTb"
-                                 Height="36"
-                                 FontSize="13"
-                                 Background="#0F1A30"
-                                 Foreground="#EAEAEA"
-                                 BorderBrush="#1E3060"
-                                 BorderThickness="1"
-                                 CaretBrush="#EAEAEA"
-                                 VerticalContentAlignment="Center">
-                            <TextBox.Template>
-                                <ControlTemplate TargetType="TextBox">
-                                    <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="6">
-                                        <ScrollViewer x:Name="PART_ContentHost"
-                                                      Margin="10 0"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsFocused" Value="True">
-                                            <Setter Property="BorderBrush" Value="#E94560"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </TextBox.Template>
-                        </TextBox>
-                    </Grid>
-                </Border>
+                    <Border x:Name="LockPanel" 
+                            Visibility="Collapsed" 
+                            Background="#2A0808" 
+                            BorderBrush="#FF4444" 
+                            BorderThickness="1" 
+                            CornerRadius="8" 
+                            Margin="0 10 0 0">
+                        <StackPanel Margin="14 10 14 10" HorizontalAlignment="Center">
+                            <TextBlock Text="🔒 Слишком много попыток" FontSize="13" FontWeight="SemiBold" Foreground="#FF6B6B" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="LockTimerTb" FontSize="12" Foreground="#A8B2D8" HorizontalAlignment="Center" Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
 
-                <!-- Блокировка по таймеру -->
-                <Border Grid.Row="7"
-                        x:Name="LockPanel"
-                        Visibility="Collapsed"
-                        Background="#2A0808"
-                        BorderBrush="#FF4444"
-                        BorderThickness="1"
-                        CornerRadius="8"
-                        Margin="0 0 0 12">
-                    <StackPanel Margin="14 10 14 10"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="🔒  Слишком много попыток"
-                                   FontSize="13"
-                                   FontWeight="SemiBold"
-                                   Foreground="#FF6B6B"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="LockTimerTb"
-                                   FontSize="12"
-                                   Foreground="#A8B2D8"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 4 0 0"/>
-                    </StackPanel>
-                </Border>
+                    <Border x:Name="ErrorPanel" 
+                            Visibility="Collapsed" 
+                            Background="#2A0808" 
+                            BorderBrush="#5A1A1A" 
+                            BorderThickness="1" 
+                            CornerRadius="6" 
+                            Margin="0 10 0 0">
+                        <TextBlock x:Name="ErrorTb" FontSize="12" Foreground="#FF6B6B" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="12 8 12 8"/>
+                    </Border>
 
-                <!-- Кнопка -->
-                <Button Grid.Row="8"
-                        x:Name="LoginBtn"
-                        Style="{StaticResource LoginButton}"
-                        Content="Войти"
-                        Click="LoginBtn_Click"/>
+                    <TextBlock x:Name="AttemptsHintTb" 
+                               FontSize="11" 
+                               Foreground="#5A6A8A" 
+                               HorizontalAlignment="Center" 
+                               Margin="0 6 0 0" 
+                               Visibility="Collapsed"/>
+                </StackPanel>
 
-                <!-- Ошибка -->
-                <Border Grid.Row="9"
-                        x:Name="ErrorPanel"
-                        Visibility="Collapsed"
-                        Background="#2A0808"
-                        BorderBrush="#5A1A1A"
-                        BorderThickness="1"
-                        CornerRadius="6"
-                        Margin="0 10 0 0">
-                    <TextBlock x:Name="ErrorTb"
-                               FontSize="12"
-                               Foreground="#FF6B6B"
-                               HorizontalAlignment="Center"
-                               TextAlignment="Center"
-                               TextWrapping="Wrap"
-                               Margin="12 8 12 8"/>
-                </Border>
-
-                <!-- Подсказка попыток -->
-                <TextBlock Grid.Row="10"
-                           x:Name="AttemptsHintTb"
-                           FontSize="11"
-                           Foreground="#5A6A8A"
-                           HorizontalAlignment="Center"
-                           Margin="0 8 0 0"
-                           Visibility="Collapsed"/>
+                <Grid Grid.Row="2">
+                    <Button x:Name="LoginBtn" 
+                            Style="{StaticResource LoginButton}" 
+                            Content="Войти" 
+                            Click="LoginBtn_Click" 
+                            VerticalAlignment="Bottom"/>
+                </Grid>
 
             </Grid>
         </Border>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ -->
-        <Border Grid.Column="1"
-                Background="{StaticResource BgDeep}">
+        <Border Grid.Column="1" Background="{StaticResource BgDeep}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -265,11 +175,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Ellipse Grid.Row="0"
-                         Width="300" Height="300"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0 0 0 -100">
+                <Ellipse Grid.Row="0" Width="300" Height="300" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 -100">
                     <Ellipse.Fill>
                         <RadialGradientBrush>
                             <GradientStop Color="#4AE94560" Offset="0"/>
@@ -278,50 +184,25 @@
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <TextBlock Grid.Row="1"
-                           Text="POWERLIFTING"
-                           FontSize="26"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource TextPrimary}"
-                           HorizontalAlignment="Center"/>
-
-                <TextBlock Grid.Row="2"
-                           Text="MANAGEMENT SYSTEM"
-                           FontSize="13"
-                           FontWeight="SemiBold"
-                           Foreground="{StaticResource Accent}"
-                           HorizontalAlignment="Center"
-                           Margin="0 4 0 24"/>
+                <TextBlock Grid.Row="1" Text="POWERLIFTING" FontSize="26" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Text="MANAGEMENT SYSTEM" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource Accent}" HorizontalAlignment="Center" Margin="0 4 0 24"/>
 
                 <StackPanel Grid.Row="3" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 12">
-                        <Border Width="8" Height="8" CornerRadius="4"
-                                Background="{StaticResource Accent}"
-                                Margin="0 0 10 0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Учёт спортсменов и тренеров"
-                                   FontSize="13" Foreground="{StaticResource TextSecondary}"/>
+                        <Border Width="8" Height="8" CornerRadius="4" Background="{StaticResource Accent}" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Учёт спортсменов и тренеров" FontSize="13" Foreground="{StaticResource TextSecondary}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 12">
-                        <Border Width="8" Height="8" CornerRadius="4"
-                                Background="{StaticResource Accent}"
-                                Margin="0 0 10 0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Журнал тренировок"
-                                   FontSize="13" Foreground="{StaticResource TextSecondary}"/>
+                        <Border Width="8" Height="8" CornerRadius="4" Background="{StaticResource Accent}" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Журнал тренировок" FontSize="13" Foreground="{StaticResource TextSecondary}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Border Width="8" Height="8" CornerRadius="4"
-                                Background="{StaticResource Accent}"
-                                Margin="0 0 10 0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Результаты и личные рекорды"
-                                   FontSize="13" Foreground="{StaticResource TextSecondary}"/>
+                        <Border Width="8" Height="8" CornerRadius="4" Background="{StaticResource Accent}" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Результаты и личные рекорды" FontSize="13" Foreground="{StaticResource TextSecondary}"/>
                     </StackPanel>
                 </StackPanel>
 
-                <Ellipse Grid.Row="4"
-                         Width="200" Height="200"
-                         HorizontalAlignment="Right"
-                         VerticalAlignment="Bottom"
-                         Margin="0 0 -60 -60">
+                <Ellipse Grid.Row="4" Width="200" Height="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 -60 -60">
                     <Ellipse.Fill>
                         <RadialGradientBrush>
                             <GradientStop Color="#2AE94560" Offset="0"/>

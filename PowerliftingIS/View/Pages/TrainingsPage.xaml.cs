@@ -1,4 +1,5 @@
-﻿using PowerliftingIS.Model;
+﻿using PowerliftingIS.AppData;
+using PowerliftingIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,26 @@ namespace PowerliftingIS.View.Pages
             CoachFilterCb.SelectedValuePath = "CoachId";
             CoachFilterCb.DisplayMemberPath = "FullName";
 
-            List<Coaches> CoachesList = new List<Coaches>();
-            CoachesList.Add(new Coaches() { CoachId = 0, FullName = "Все тренеры" });
-            foreach (Coaches CoachItem in App.context.Coaches.ToList())
+            if (SessionManager.IsAdmin)
             {
-                CoachesList.Add(CoachItem);
+                List<Coaches> CoachesList = new List<Coaches>();
+                CoachesList.Add(new Coaches() { CoachId = 0, FullName = "Все тренеры" });
+                foreach (Coaches CoachItem in App.context.Coaches.ToList())
+                {
+                    CoachesList.Add(CoachItem);
+                }
+                CoachFilterCb.ItemsSource = CoachesList;
+                CoachFilterCb.SelectedIndex = 0;
+                CoachFilterCb.IsEnabled = true;
             }
-            CoachFilterCb.ItemsSource = CoachesList;
-            CoachFilterCb.SelectedIndex = 0;
+            else
+            {
+                List<Coaches> CoachesList = new List<Coaches>();
+                CoachesList.Add(SessionManager.CurrentCoach);
+                CoachFilterCb.ItemsSource = CoachesList;
+                CoachFilterCb.SelectedIndex = 0;
+                CoachFilterCb.IsEnabled = false;
+            }
 
             LoadData();
         }
@@ -51,6 +64,9 @@ namespace PowerliftingIS.View.Pages
 
             foreach (Trainings TrainingItem in App.context.Trainings.ToList())
             {
+                bool MatchesRole = SessionManager.IsAdmin ||
+                                   TrainingItem.CoachId == SessionManager.CurrentCoach.CoachId;
+
                 bool MatchesSearch = string.IsNullOrEmpty(SearchText) ||
                                      TrainingItem.Description != null &&
                                      TrainingItem.Description.ToLower().Contains(SearchText);
@@ -58,7 +74,7 @@ namespace PowerliftingIS.View.Pages
                 bool MatchesCoach = SelectedCoachId == 0 ||
                                     TrainingItem.CoachId == SelectedCoachId;
 
-                if (MatchesSearch && MatchesCoach)
+                if (MatchesRole && MatchesSearch && MatchesCoach)
                 {
                     FilteredList.Add(TrainingItem);
                 }
@@ -122,30 +138,37 @@ namespace PowerliftingIS.View.Pages
             {
                 Trainings SelectedTraining = TrainingsDg.SelectedItem as Trainings;
 
-                MessageBoxResult Result = MessageBox.Show(
-                    "Удалить тренировку от " + SelectedTraining.TrainingDate.ToString("dd.MM.yyyy") + "?",
-                    "Подтверждение",
-                    MessageBoxButton.YesNo);
-
-                if (Result == MessageBoxResult.Yes)
+                if (!SessionManager.IsAdmin && SelectedTraining.CoachId != SessionManager.CurrentCoach.CoachId)
                 {
-                    List<TrainingAthletes> AttendanceList = new List<TrainingAthletes>();
-                    foreach (TrainingAthletes Item in App.context.TrainingAthletes.ToList())
+                    MessageBox.Show("Вы можете удалять только свои тренировки");
+                }
+                else
+                {
+                    MessageBoxResult Result = MessageBox.Show(
+                        "Удалить тренировку от " + SelectedTraining.TrainingDate.ToString("dd.MM.yyyy") + "?",
+                        "Подтверждение",
+                        MessageBoxButton.YesNo);
+
+                    if (Result == MessageBoxResult.Yes)
                     {
-                        if (Item.TrainingId == SelectedTraining.TrainingId)
+                        List<TrainingAthletes> AttendanceList = new List<TrainingAthletes>();
+                        foreach (TrainingAthletes Item in App.context.TrainingAthletes.ToList())
                         {
-                            AttendanceList.Add(Item);
+                            if (Item.TrainingId == SelectedTraining.TrainingId)
+                            {
+                                AttendanceList.Add(Item);
+                            }
                         }
-                    }
 
-                    foreach (TrainingAthletes Item in AttendanceList)
-                    {
-                        App.context.TrainingAthletes.Remove(Item);
-                    }
+                        foreach (TrainingAthletes Item in AttendanceList)
+                        {
+                            App.context.TrainingAthletes.Remove(Item);
+                        }
 
-                    App.context.Trainings.Remove(SelectedTraining);
-                    App.context.SaveChanges();
-                    LoadData();
+                        App.context.Trainings.Remove(SelectedTraining);
+                        App.context.SaveChanges();
+                        LoadData();
+                    }
                 }
             }
         }

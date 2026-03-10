@@ -1,4 +1,5 @@
-﻿using PowerliftingIS.Model;
+﻿using PowerliftingIS.AppData;
+using PowerliftingIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,12 @@ namespace PowerliftingIS.View.Pages
             AthletesList.Add(new Athletes() { AthleteId = 0, FullName = "Все спортсмены" });
             foreach (Athletes AthleteItem in App.context.Athletes.ToList())
             {
-                AthletesList.Add(AthleteItem);
+                bool MatchesRole = SessionManager.IsAdmin ||
+                                   AthleteItem.CoachId == SessionManager.CurrentCoach.CoachId;
+                if (MatchesRole)
+                {
+                    AthletesList.Add(AthleteItem);
+                }
             }
             AthleteFilterCb.ItemsSource = AthletesList;
             AthleteFilterCb.SelectedIndex = 0;
@@ -75,6 +81,9 @@ namespace PowerliftingIS.View.Pages
 
             foreach (Results ResultItem in App.context.Results.ToList())
             {
+                bool MatchesRole = SessionManager.IsAdmin ||
+                                   ResultItem.Athletes.CoachId == SessionManager.CurrentCoach.CoachId;
+
                 bool MatchesAthlete = SelectedAthleteId == 0 ||
                                       ResultItem.AthleteId == SelectedAthleteId;
 
@@ -83,7 +92,7 @@ namespace PowerliftingIS.View.Pages
 
                 bool MatchesRecord = !OnlyRecords || ResultItem.IsPersonalRecord == true;
 
-                if (MatchesAthlete && MatchesExercise && MatchesRecord)
+                if (MatchesRole && MatchesAthlete && MatchesExercise && MatchesRecord)
                 {
                     FilteredList.Add(ResultItem);
                 }
@@ -115,16 +124,24 @@ namespace PowerliftingIS.View.Pages
             {
                 Results SelectedResult = ResultsDg.SelectedItem as Results;
 
-                MessageBoxResult Result = MessageBox.Show(
-                    "Удалить результат?",
-                    "Подтверждение",
-                    MessageBoxButton.YesNo);
-
-                if (Result == MessageBoxResult.Yes)
+                if (!SessionManager.IsAdmin &&
+                    SelectedResult.Athletes.CoachId != SessionManager.CurrentCoach.CoachId)
                 {
-                    App.context.Results.Remove(SelectedResult);
-                    App.context.SaveChanges();
-                    LoadData();
+                    MessageBox.Show("Вы можете удалять только результаты своих спортсменов");
+                }
+                else
+                {
+                    MessageBoxResult Result = MessageBox.Show(
+                        "Удалить результат?",
+                        "Подтверждение",
+                        MessageBoxButton.YesNo);
+
+                    if (Result == MessageBoxResult.Yes)
+                    {
+                        App.context.Results.Remove(SelectedResult);
+                        App.context.SaveChanges();
+                        LoadData();
+                    }
                 }
             }
         }

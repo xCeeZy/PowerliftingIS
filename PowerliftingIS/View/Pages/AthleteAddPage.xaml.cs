@@ -1,4 +1,5 @@
-﻿using PowerliftingIS.Model;
+﻿using PowerliftingIS.AppData;
+using PowerliftingIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,21 @@ namespace PowerliftingIS.View.Pages
 
             CoachCb.SelectedValuePath = "CoachId";
             CoachCb.DisplayMemberPath = "FullName";
-            CoachCb.ItemsSource = App.context.Coaches.ToList();
+
+            if (SessionManager.IsAdmin)
+            {
+                CoachCb.ItemsSource = App.context.Coaches.ToList();
+                CoachCb.IsEnabled = true;
+            }
+            else
+            {
+                CoachCb.ItemsSource = new System.Collections.Generic.List<Coaches>
+                {
+                    SessionManager.CurrentCoach
+                };
+                CoachCb.SelectedIndex = 0;
+                CoachCb.IsEnabled = false;
+            }
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
